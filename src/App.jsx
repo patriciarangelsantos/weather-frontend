@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import SearchBar from './components/SearchBar';
 import WeatherCard from './components/WeatherCard';
-import History from './components/History';
+import WeatherChart from './components/WeatherChart';
+import Compare from './components/Compare';
 
 export default function App() {
   const [busca, setBusca] = useState('');
   const [resultado, setResultado] = useState(null);
   const [erro, setErro] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [historico, setHistorico] = useState([]);
 
   function handleBuscar() {
     setLoading(true);
@@ -18,6 +20,10 @@ export default function App() {
     axios.get(`http://localhost:8080/api/weather/current?city=${busca}`)
       .then(({ data }) => {
         setResultado(data);
+        return axios.get(`http://localhost:8080/api/weather/history?city=${busca}`);
+      })
+      .then(({ data }) => {
+        setHistorico(data);
       })
       .catch(() => {
         setErro('City not found. Please try again.');
@@ -34,15 +40,16 @@ export default function App() {
       {loading && <p style={{ textAlign: 'center', color: '#888' }}>Buscando...</p>}
       {erro && <p style={{ textAlign: 'center', color: 'red' }}>{erro}</p>}
       {resultado && (
-         <>
-        <WeatherCard
-          city={resultado.name}
-          temperature={resultado.main.temp}
-          description={resultado.weather[0].description}
-          humidity={resultado.main.humidity}
-        />
-        <History city={busca} />
-      </>
+        <>
+          <WeatherCard
+            city={resultado.name}
+            temperature={resultado.main.temp}
+            description={resultado.weather[0].description}
+            humidity={resultado.main.humidity}
+          />
+          {historico.length > 0 && <WeatherChart data={historico} />}
+          <Compare />
+        </>
       )}
     </div>
   );
