@@ -5,7 +5,7 @@ export default function SearchBar({ searchTerm, onSearchChange, onBuscar }) {
     <div style={{ marginBottom: '20px', boxSizing: 'border-box', width: '100%' }}>
       <input
         type="text"
-        placeholder="Digite uma cidade..."
+        placeholder="Enter a city..."
         value={searchTerm}
         onChange={(e) => onSearchChange(e.target.value)}
         style={{
@@ -32,7 +32,7 @@ export default function SearchBar({ searchTerm, onSearchChange, onBuscar }) {
           boxSizing: 'border-box'
         }}
       >
-        Buscar
+        Search
       </button>
     </div>
   );

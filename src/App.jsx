@@ -35,9 +35,9 @@ export default function App() {
 
   return (
     <div style={{ width: '400px', margin: '50px auto', fontFamily: 'sans-serif' }}>
-      <h2 style={{ textAlign: 'center' }}>Dashboard de Clima</h2>
+      <h2 style={{ textAlign: 'center' }}>Weather Dashboard</h2>
       <SearchBar searchTerm={busca} onSearchChange={setBusca} onBuscar={handleBuscar} />
-      {loading && <p style={{ textAlign: 'center', color: '#888' }}>Buscando...</p>}
+      {loading && <p style={{ textAlign: 'center', color: '#888' }}>Loading...</p>}
       {erro && <p style={{ textAlign: 'center', color: 'red' }}>{erro}</p>}
       {resultado && (
         <>
